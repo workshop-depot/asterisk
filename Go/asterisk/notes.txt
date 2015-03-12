@@ -1,0 +1,74 @@
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+// Julian Day -> JulianDay
+// Calendar Day -> time.Time
+// Degree -> time.Duration
+package main
+
+import (
+	"asterisk/astrobserve"
+	"asterisk/def"
+	"asterisk/def/position"
+	//	"fmt"
+	"gopkg.in/mgo.v2"
+	//	"gopkg.in/mgo.v2/bson"
+	"log"
+	"runtime"
+	"time"
+)
+
+func main() {
+	defer func() {
+		stop := astrobserve.ForStop{true, make(chan bool, 1)}
+		astrobserve.StopChan <- stop
+		<-stop.Answer
+	}()
+
+	t := time.Date(1976, time.January, 9, 23, 55, 30, 0, time.UTC)
+	t = t.Add(def.DurationFromHour(-3.5))
+	p := position.Position{Lon: (47. + 5./60.), Lat: (34. + 19./60.)}
+
+	cset := &astrobserve.ChartSet{}
+	cset.For(t, p)
+
+	session, err := mgo.Dial("127.0.0.1:27072")
+	if err != nil {
+		panic(err)
+	}
+	defer session.Close()
+
+	session.SetMode(mgo.Strong, true)
+	db := session.DB("test")
+	err = db.DropDatabase()
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	//	cset.Id = bson.NewObjectId()
+	//	err = c.Insert(cset)
+	//	if err != nil {
+	//		log.Fatal(err)
+	//	}
+
+	//	cres := astrobserve.ChartSet{}
+	//	err = c.Find(bson.M{"_id": cset.Id}).One(&cres)
+
+	//	if err != nil {
+	//		log.Fatal(err)
+	//	}
+
+	//	log.Println("----------")
+	//	for _, pli := range cres.List() {
+	//		v := pli
+	//		log.Printf("%+v\n", v)
+	//	}
+	//	log.Println("----------")
+}
+
+func init() {
+	runtime.GOMAXPROCS(3 * runtime.NumCPU())
+}
