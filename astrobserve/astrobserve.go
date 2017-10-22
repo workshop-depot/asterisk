@@ -3,13 +3,7 @@ package astrobserve
 import (
 	"path/filepath"
 
-	. "github.com/dc0d/asterisk"
-	"github.com/dc0d/asterisk/config"
-	. "github.com/dc0d/asterisk/def/flow"
-	. "github.com/dc0d/asterisk/def/julian"
-	. "github.com/dc0d/asterisk/def/planet"
-	. "github.com/dc0d/asterisk/def/point"
-	. "github.com/dc0d/asterisk/def/position"
+	"github.com/dc0d/asterisk"
 	"github.com/dc0d/gosweph"
 )
 
@@ -37,24 +31,24 @@ func IsNightly(asc, su float64) bool {
 }
 
 type ForPlanet struct {
-	Planet    Planet
-	JulianDay JulianDay
-	Answer    chan Point
+	Planet    asterisk.Planet
+	JulianDay asterisk.JulianDay
+	Answer    chan asterisk.Point
 }
 
 type ForAscendant struct {
-	Position  Position
-	JulianDay JulianDay
+	Position  asterisk.Position
+	JulianDay asterisk.JulianDay
 	Asc       Angle
 	Answer    chan float64
 }
 
 type ForTransit struct {
-	Planet      Planet
-	Position    Position
-	JulianDay   JulianDay
-	TransitFlag TransitFlag
-	Answer      chan JulianDay
+	Planet      asterisk.Planet
+	Position    asterisk.Position
+	JulianDay   asterisk.JulianDay
+	TransitFlag asterisk.TransitFlag
+	Answer      chan asterisk.JulianDay
 }
 
 type ForStop struct {
@@ -105,21 +99,25 @@ func dispose() {
 }
 
 func setup() {
-	dir, err := filepath.Abs(filepath.Dir(config.EphemerisPath))
+	dir, err := filepath.Abs(filepath.Dir(asterisk.EphemerisPath))
 	if err != nil {
 		panic(err)
 	}
 
-	dir = filepath.Join(dir, config.EphemerisPath)
+	dir = filepath.Join(dir, asterisk.EphemerisPath)
 
-	gosweph.Swe_set_sid_mode(int32(config.SiderealMode), 0., 0.)
+	gosweph.Swe_set_sid_mode(int32(asterisk.SiderealMode), 0., 0.)
 	gosweph.Swe_set_ephe_path(&dir)
 }
 
-func observeTransits(pln Planet, position Position, time JulianDay, transitFlags int32) JulianDay {
+func observeTransits(
+	pln asterisk.Planet,
+	position asterisk.Position,
+	time asterisk.JulianDay,
+	transitFlags int32) asterisk.JulianDay {
 	jd := float64(time)
 	tjd_ut := jd
-	epheflag := config.IFlag
+	epheflag := asterisk.IFlag
 	rsmi := transitFlags
 	geopos := [3]float64{position.Lon, position.Lat, 0.}
 	atpress := 0.
@@ -129,45 +127,45 @@ func observeTransits(pln Planet, position Position, time JulianDay, transitFlags
 
 	gosweph.Swe_rise_trans(tjd_ut, pln.Swe(), nil, epheflag, rsmi, &geopos, atpress, attemp, &tret, &serr)
 
-	return JulianDay(tret)
+	return asterisk.JulianDay(tret)
 }
 
-func observeAscendant(position Position, time JulianDay, asc Angle) float64 {
+func observeAscendant(position asterisk.Position, time asterisk.JulianDay, asc Angle) float64 {
 	_, ascmc := observeHouses(position, time)
 	return ascmc[asc]
 }
 
-func observeHouses(position Position, time JulianDay) (cusps [13]float64, ascmc [10]float64) {
+func observeHouses(position asterisk.Position, time asterisk.JulianDay) (cusps [13]float64, ascmc [10]float64) {
 	jd := float64(time)
 	_cusps := cusps
 	_ascmc := ascmc
-	gosweph.Swe_houses_ex(jd, config.IFlag, position.Lat, position.Lon, int32(config.HouseSystem), &_cusps, &_ascmc)
+	gosweph.Swe_houses_ex(jd, asterisk.IFlag, position.Lat, position.Lon, int32(asterisk.HouseSystem), &_cusps, &_ascmc)
 
 	cusps = _cusps
 	ascmc = _ascmc
 	return
 }
 
-func observePoint(pln Planet, time JulianDay) Point {
+func observePoint(pln asterisk.Planet, time asterisk.JulianDay) asterisk.Point {
 	var xx [6]float64
 	var serr string
 	jd := float64(time)
 
-	iflag := config.IFlag
+	iflag := asterisk.IFlag
 	gosweph.Swe_calc_ut(jd, pln.Swe(), iflag, &xx, &serr)
 
-	var pointPosition Position
-	if pln == Ke {
-		lon := PositiveMod(xx[0]+180., 360.)
+	var pointPosition asterisk.Position
+	if pln == asterisk.Ke {
+		lon := asterisk.PositiveMod(xx[0]+180., 360.)
 		lat := xx[1] * -1.
-		pointPosition = Position{Lon: lon, Lat: lat}
+		pointPosition = asterisk.Position{Lon: lon, Lat: lat}
 	} else {
 		lon := xx[0]
 		lat := xx[1]
-		pointPosition = Position{Lon: lon, Lat: lat}
+		pointPosition = asterisk.Position{Lon: lon, Lat: lat}
 	}
 
-	flow := Flow{Distance: xx[2], SpeedInLongitude: xx[3], SpeedInLatitude: xx[4], SpeedInDistance: xx[5]}
+	flow := asterisk.Flow{Distance: xx[2], SpeedInLongitude: xx[3], SpeedInLatitude: xx[4], SpeedInDistance: xx[5]}
 
-	return Point{Id: pln, Position: pointPosition, Flow: flow}
+	return asterisk.Point{ID: pln, Position: pointPosition, Flow: flow}
 }

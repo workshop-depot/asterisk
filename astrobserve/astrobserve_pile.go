@@ -5,33 +5,24 @@ import (
 	"math"
 	"time"
 
+	"github.com/dc0d/asterisk"
 	"github.com/dc0d/gosweph"
-
-	. "github.com/dc0d/asterisk"
-	"github.com/dc0d/asterisk/config"
-	. "github.com/dc0d/asterisk/def/flow"
-	. "github.com/dc0d/asterisk/def/house"
-	. "github.com/dc0d/asterisk/def/julian"
-	. "github.com/dc0d/asterisk/def/planet"
-	. "github.com/dc0d/asterisk/def/point"
-	. "github.com/dc0d/asterisk/def/position"
-	. "github.com/dc0d/asterisk/def/sign"
 )
 
 type Arc struct{ Start, End float64 }
 
 func (a Arc) String() string {
-	return fmt.Sprintf("{Start: %v, End: %v}", Degree(a.Start), Degree(a.End))
+	return fmt.Sprintf("{Start: %v, End: %v}", asterisk.Degree(a.Start), asterisk.Degree(a.End))
 }
 
 type Sub struct {
-	Ruler Planet
+	Ruler asterisk.Planet
 	Arc   Arc
 }
 
 type Nakshatra struct {
 	Name  string
-	Ruler Planet
+	Ruler asterisk.Planet
 	Arc   Arc
 	Subs  []Sub
 }
@@ -53,19 +44,19 @@ var WeekLords = []weekLord{
 }
 */
 
-var Diptamsa = map[Planet]float64{
-	Su: 15.,
-	Mo: 12.,
-	Me: 7.,
-	Ve: 7.,
-	Ma: 8.,
-	Ju: 9.,
-	Sa: 9.,
-	Ur: 5.,
-	Ne: 5.,
-	Pl: 5.,
-	Ra: 8.,
-	Ke: 8.,
+var Diptamsa = map[asterisk.Planet]float64{
+	asterisk.Su: 15.,
+	asterisk.Mo: 12.,
+	asterisk.Me: 7.,
+	asterisk.Ve: 7.,
+	asterisk.Ma: 8.,
+	asterisk.Ju: 9.,
+	asterisk.Sa: 9.,
+	asterisk.Ur: 5.,
+	asterisk.Ne: 5.,
+	asterisk.Pl: 5.,
+	asterisk.Ra: 8.,
+	asterisk.Ke: 8.,
 }
 
 /*
@@ -154,20 +145,20 @@ var Elementals = map[Sign]Element{
 */
 
 type RulingYears struct {
-	Planet Planet
+	Planet asterisk.Planet
 	Years  int32
 }
 
 var RulingYearsList = []RulingYears{
-	RulingYears{Ke, 7},
-	RulingYears{Ve, 20},
-	RulingYears{Su, 6},
-	RulingYears{Mo, 10},
-	RulingYears{Ma, 7},
-	RulingYears{Ra, 18},
-	RulingYears{Ju, 16},
-	RulingYears{Sa, 19},
-	RulingYears{Me, 17},
+	RulingYears{asterisk.Ke, 7},
+	RulingYears{asterisk.Ve, 20},
+	RulingYears{asterisk.Su, 6},
+	RulingYears{asterisk.Mo, 10},
+	RulingYears{asterisk.Ma, 7},
+	RulingYears{asterisk.Ra, 18},
+	RulingYears{asterisk.Ju, 16},
+	RulingYears{asterisk.Sa, 19},
+	RulingYears{asterisk.Me, 17},
 }
 
 /*
@@ -192,37 +183,37 @@ var _subUnitLen = _nakshatraLen / 120.
 
 type nakinf struct {
 	name  string
-	ruler Planet
+	ruler asterisk.Planet
 }
 
 var nakshatraNameAndRuler = []nakinf{
-	nakinf{"Ashvinī", Ke},
-	nakinf{"Bharanī", Ve},
-	nakinf{"Krittikā", Su},
-	nakinf{"Rohini", Mo},
-	nakinf{"Mrigashīrsha", Ma},
-	nakinf{"Ārdrā", Ra},
-	nakinf{"Punarvasu", Ju},
-	nakinf{"Pushya", Sa},
-	nakinf{"Āshleshā", Me},
-	nakinf{"Maghā", Ke},
-	nakinf{"Pūrva Phalgunī", Ve},
-	nakinf{"Uttara Phalgunī", Su},
-	nakinf{"Hasta", Mo},
-	nakinf{"Chitrā", Ma},
-	nakinf{"Svātī", Ra},
-	nakinf{"Vishākhā", Ju},
-	nakinf{"Anurādhā", Sa},
-	nakinf{"Jyeshtha", Me},
-	nakinf{"Mūla", Ke},
-	nakinf{"Pūrva Ashādhā", Ve},
-	nakinf{"Uttara Ashadha", Su},
-	nakinf{"Shravana", Mo},
-	nakinf{"Shravishthā", Ma},
-	nakinf{"Shatabhishā", Ra},
-	nakinf{"Pūrva Bhādrapadā", Ju},
-	nakinf{"Uttara Bhādrapadā", Sa},
-	nakinf{"Revatī", Me},
+	nakinf{"Ashvinī", asterisk.Ke},
+	nakinf{"Bharanī", asterisk.Ve},
+	nakinf{"Krittikā", asterisk.Su},
+	nakinf{"Rohini", asterisk.Mo},
+	nakinf{"Mrigashīrsha", asterisk.Ma},
+	nakinf{"Ārdrā", asterisk.Ra},
+	nakinf{"Punarvasu", asterisk.Ju},
+	nakinf{"Pushya", asterisk.Sa},
+	nakinf{"Āshleshā", asterisk.Me},
+	nakinf{"Maghā", asterisk.Ke},
+	nakinf{"Pūrva Phalgunī", asterisk.Ve},
+	nakinf{"Uttara Phalgunī", asterisk.Su},
+	nakinf{"Hasta", asterisk.Mo},
+	nakinf{"Chitrā", asterisk.Ma},
+	nakinf{"Svātī", asterisk.Ra},
+	nakinf{"Vishākhā", asterisk.Ju},
+	nakinf{"Anurādhā", asterisk.Sa},
+	nakinf{"Jyeshtha", asterisk.Me},
+	nakinf{"Mūla", asterisk.Ke},
+	nakinf{"Pūrva Ashādhā", asterisk.Ve},
+	nakinf{"Uttara Ashadha", asterisk.Su},
+	nakinf{"Shravana", asterisk.Mo},
+	nakinf{"Shravishthā", asterisk.Ma},
+	nakinf{"Shatabhishā", asterisk.Ra},
+	nakinf{"Pūrva Bhādrapadā", asterisk.Ju},
+	nakinf{"Uttara Bhādrapadā", asterisk.Sa},
+	nakinf{"Revatī", asterisk.Me},
 }
 
 func initNakshatras() []Nakshatra {
@@ -276,7 +267,7 @@ func initNakshatras() []Nakshatra {
 var Nakshatras = initNakshatras()
 
 func FindNakshatra(lon float64) (nakshatra Nakshatra, sub Sub) {
-	//fmt.Printf("%v\n", Degree(lon))
+	//fmt.Printf("%v\n",   asterisk.Degree(lon))
 	for _, n := range Nakshatras {
 		n := n
 		if n.Arc.Start <= lon && lon < n.Arc.End {
@@ -297,7 +288,7 @@ func FindNakshatra(lon float64) (nakshatra Nakshatra, sub Sub) {
 }
 
 type AtSign struct {
-	Sign    Sign
+	Sign    asterisk.Sign
 	float64 float64
 }
 
@@ -359,7 +350,7 @@ const (
 )
 
 type Celestial struct {
-	Planet *Planet
+	Planet *asterisk.Planet
 	Angle  *Angle
 }
 
@@ -374,8 +365,8 @@ func (c Celestial) String() string {
 }
 
 type Disposition struct {
-	Position Position
-	Flow     Flow
+	Position asterisk.Position
+	Flow     asterisk.Flow
 }
 
 func (d *Disposition) String() string {
@@ -389,7 +380,7 @@ type Site struct {
 
 func (s Site) String() string {
 	if s.Longitude != nil {
-		return fmt.Sprintf("{Longitude: %s}", DegreeString(DurationFromHour(*s.Longitude)))
+		return fmt.Sprintf("{Longitude: %s}", asterisk.DegreeString(asterisk.DurationFromHour(*s.Longitude)))
 	}
 
 	return fmt.Sprintf("{%+v}", s.Disposition)
@@ -401,21 +392,21 @@ type AsterBook struct {
 
 	nak        *Nakshatra
 	sub        *Sub
-	sign       *Sign
-	house      *House
+	sign       *asterisk.Sign
+	house      *asterisk.House
 	lon        *float64
 	signDegree *float64
 	mansion    *IslamicMansion
 }
 
 func (ab AsterBook) String() string {
-	return fmt.Sprintf("{Celestial: %+v, Site: %+v, Longitude: %s, Nakshatra: %s, Sign: %v, Sign Degree: %v, House: %v, Manstion: %v}",
+	return fmt.Sprintf("{Celestial: %+v, Site: %+v, Longitude: %s, Nakshatra: %s, Sign: %v, Sign   asterisk.Degree: %v, House: %v, Manstion: %v}",
 		ab.Celestial,
 		ab.Site,
-		Degree(ab.Longitude()),
+		asterisk.Degree(ab.Longitude()),
 		fmt.Sprintf("%s/%s (%s)", ab.Nakshatra().Ruler, ab.Sub().Ruler, ab.Nakshatra().Name),
 		ab.Sign(),
-		Degree(ab.SignDegree()),
+		asterisk.Degree(ab.SignDegree()),
 		ab.House(),
 		ab.Mansion())
 }
@@ -445,7 +436,7 @@ func (book *AsterBook) SignDegree() float64 {
 		return *book.signDegree
 	}
 	l := book.Longitude()
-	sd := SignDegree(l)
+	sd := asterisk.SignDegree(l)
 	book.signDegree = &sd
 	return sd
 }
@@ -486,27 +477,27 @@ func (book *AsterBook) Sub() Sub {
 	return *book.sub
 }
 
-func (book *AsterBook) Sign() Sign {
+func (book *AsterBook) Sign() asterisk.Sign {
 	if book.sign != nil {
 		return *book.sign
 	}
 
-	sn := SignOf(book.Longitude())
+	sn := asterisk.SignOf(book.Longitude())
 	book.sign = &sn
 	return *book.sign
 }
 
-func (book *AsterBook) InitHouse(ascSign Sign) House {
+func (book *AsterBook) InitHouse(ascSign asterisk.Sign) asterisk.House {
 	if book.house != nil {
 		return *book.house
 	}
 
-	hl := HouseOf(ascSign, book.Sign())
+	hl := asterisk.HouseOf(ascSign, book.Sign())
 	book.house = &hl
 	return *book.house
 }
 
-func (book *AsterBook) House() *House {
+func (book *AsterBook) House() *asterisk.House {
 	return book.house
 }
 
@@ -655,9 +646,9 @@ const (
 func AspectOf(p1, p2 CeLon) (aspDeg Aspect, aspPeak Peak) {
 	aspDeg, aspPeak = Unaspected, NoPeak
 
-	v := FitIn(math.Abs(p1.Lon-p2.Lon-360.), 0., 360.)
+	v := asterisk.FitIn(math.Abs(p1.Lon-p2.Lon-360.), 0., 360.)
 	if v > 180. {
-		v = FitIn(math.Abs(v-360.), 0., 360.)
+		v = asterisk.FitIn(math.Abs(v-360.), 0., 360.)
 	}
 
 	diff := v
@@ -669,8 +660,8 @@ func AspectOf(p1, p2 CeLon) (aspDeg Aspect, aspPeak Peak) {
 	} else if asp, p := InRange(120., 6., peakDiff, diff); asp != Unaspected {
 		aspDeg, aspPeak = Asp_120, p
 	} else if asp, p := InRange(180., 8., peakDiff, diff); asp != Unaspected {
-		cond1 := (*p1.Celestial.Planet == Ra) && (*p2.Celestial.Planet == Ke)
-		cond2 := (*p1.Celestial.Planet == Ke) && (*p2.Celestial.Planet == Ra)
+		cond1 := (*p1.Celestial.Planet == asterisk.Ra) && (*p2.Celestial.Planet == asterisk.Ke)
+		cond2 := (*p1.Celestial.Planet == asterisk.Ke) && (*p2.Celestial.Planet == asterisk.Ra)
 		if cond1 || cond2 {
 			aspDeg, aspPeak = Unaspected, p
 		} else {
@@ -681,7 +672,7 @@ func AspectOf(p1, p2 CeLon) (aspDeg Aspect, aspPeak Peak) {
 	if aspDeg == Unaspected {
 		if p1.Celestial.Angle != nil || p2.Celestial.Angle != nil {
 			//NOP
-		} else if diff < (Diptamsa[Planet(*p1.Celestial.Planet)] + Diptamsa[Planet(*p2.Celestial.Planet)]) {
+		} else if diff < (Diptamsa[asterisk.Planet(*p1.Celestial.Planet)] + Diptamsa[asterisk.Planet(*p2.Celestial.Planet)]) {
 			aspDeg = Cj
 			if diff <= peakDiff {
 				aspPeak = AtPeak
@@ -712,15 +703,15 @@ type ChartSet struct {
 	Ra  Aster
 	Ke  Aster
 
-	Position Position
+	Position asterisk.Position
 	Time     time.Time
 }
 
-func (ch *ChartSet) For(utc time.Time, pos Position) *ChartSet {
+func (ch *ChartSet) For(utc time.Time, pos asterisk.Position) *ChartSet {
 	cset := ch
-	jd := JulianDayOf(utc)
+	jd := asterisk.JulianDayOf(utc)
 
-	fa := ForAscendant{Position: pos, JulianDay: jd, Asc: Angle(config.Asc), Answer: make(chan float64, 1)}
+	fa := ForAscendant{Position: pos, JulianDay: jd, Asc: Angle(Asc), Answer: make(chan float64, 1)}
 	AscendantChan <- fa
 	ascd := <-fa.Answer
 	ascBuff := Asc
@@ -729,9 +720,9 @@ func (ch *ChartSet) For(utc time.Time, pos Position) *ChartSet {
 	a.AsterBook.InitHouse(a.AsterBook.Sign())
 	cset.Asc = a
 
-	for _, pltx := range PlanetList {
+	for _, pltx := range asterisk.PlanetList {
 		plt := pltx
-		fp := ForPlanet{Planet: plt, JulianDay: jd, Answer: make(chan Point, 1)}
+		fp := ForPlanet{Planet: plt, JulianDay: jd, Answer: make(chan asterisk.Point, 1)}
 		PlanetChan <- fp
 		pnt := <-fp.Answer
 		cel := Celestial{Planet: &plt}
@@ -752,31 +743,31 @@ func (ch *ChartSet) For(utc time.Time, pos Position) *ChartSet {
 	return ch
 }
 
-func (ch *ChartSet) SetPlanet(plt Planet, a *Aster) {
+func (ch *ChartSet) SetPlanet(plt asterisk.Planet, a *Aster) {
 	switch plt {
-	case Su:
+	case asterisk.Su:
 		ch.Su = *a
-	case Mo:
+	case asterisk.Mo:
 		ch.Mo = *a
-	case Me:
+	case asterisk.Me:
 		ch.Me = *a
-	case Ve:
+	case asterisk.Ve:
 		ch.Ve = *a
-	case Ma:
+	case asterisk.Ma:
 		ch.Ma = *a
-	case Ju:
+	case asterisk.Ju:
 		ch.Ju = *a
-	case Sa:
+	case asterisk.Sa:
 		ch.Sa = *a
-	case Ur:
+	case asterisk.Ur:
 		ch.Ur = *a
-	case Ne:
+	case asterisk.Ne:
 		ch.Ne = *a
-	case Pl:
+	case asterisk.Pl:
 		ch.Pl = *a
-	case Ra:
+	case asterisk.Ra:
 		ch.Ra = *a
-	case Ke:
+	case asterisk.Ke:
 		ch.Ke = *a
 	}
 }
