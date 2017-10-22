@@ -1,3 +1,6 @@
+asterisk
+sweph-files/
+
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
 *.o
 *.a
@@ -22,5 +25,3 @@ _testmain.go
 *.exe
 *.test
 *.prof
-
-sweph-files/

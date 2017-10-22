@@ -1,4 +1,18 @@
 # asterisk
+To make this package a pure Go one, F# code (and old code) moved to branch [archive01](https://github.com/dc0d/asterisk/tree/archive01).
+
+For a Go wrapper for swiss ephemeris, see [gosweph](https://github.com/dc0d/gosweph).
+
+Go package used for Persian Calendar calculations is [persical](https://github.com/dc0d/persical).
+
+### current status
+Cleaning up things and applying Go best practices (as much as time allows me).
+
+### TODO
+* making it `go get`able.
+* removing the executable and it's dependencies (like `mgo` and perhaps putting it inside another repo)
+
+# old readme
 This code base basically contains a pile of Astrological abstractions and calculations in F# and Go. I've written these in C# and Python too. I've gave up Python because of dreadful ways it provides for FFI (and at last I've used another wrapper library for Swiss Ephemeris). F# is a great language for making abstractions - but it can easily seduce oneself into over-abstracting things. I'm happy with Go so far; but having no GUI tools is let's say measurably saddening.
 
 There are enough abstraction for one to get started with [Swiss Ephemeris](http://www.astro.com/swisseph/) in F# (#fsharp) and Go (#golang). One can calculate a chart, planet hours and some events like start, max and end of angles between planets, in a time period like a month.
