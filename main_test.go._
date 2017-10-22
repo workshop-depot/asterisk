@@ -1,19 +1,20 @@
-package main
+package mainold
 
 import (
-	. "asterisk/astrobserve"
-	"asterisk/config"
-	. "asterisk/def"
-	. "asterisk/def/flow"
-	. "asterisk/def/julian"
-	. "asterisk/def/planet"
-	. "asterisk/def/point"
-	. "asterisk/def/position"
-	. "asterisk/def/sign"
 	"fmt"
 	"studio"
 	"testing"
 	"time"
+
+	. "github.com/dc0d/asterisk/astrobserve"
+	"github.com/dc0d/asterisk/config"
+	. "github.com/dc0d/asterisk/def"
+	. "github.com/dc0d/asterisk/def/flow"
+	. "github.com/dc0d/asterisk/def/julian"
+	. "github.com/dc0d/asterisk/def/planet"
+	. "github.com/dc0d/asterisk/def/point"
+	. "github.com/dc0d/asterisk/def/position"
+	. "github.com/dc0d/asterisk/def/sign"
 )
 
 func timeTrack(start time.Time, name string) {

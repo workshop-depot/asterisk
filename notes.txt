@@ -10,9 +10,9 @@
 package main
 
 import (
-	"asterisk/astrobserve"
-	"asterisk/def"
-	"asterisk/def/position"
+	"github.com/dc0d/asterisk/astrobserve"
+	"github.com/dc0d/asterisk/def"
+	"github.com/dc0d/asterisk/def/position"
 	//	"fmt"
 	"gopkg.in/mgo.v2"
 	//	"gopkg.in/mgo.v2/bson"

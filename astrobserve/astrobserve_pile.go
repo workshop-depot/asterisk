@@ -1,19 +1,21 @@
 package astrobserve
 
 import (
-	"asterisk/config"
-	. "asterisk/def"
-	. "asterisk/def/flow"
-	. "asterisk/def/house"
-	. "asterisk/def/julian"
-	. "asterisk/def/planet"
-	. "asterisk/def/point"
-	. "asterisk/def/position"
-	. "asterisk/def/sign"
 	"fmt"
-	"gosweph"
 	"math"
 	"time"
+
+	"github.com/dc0d/gosweph"
+
+	. "github.com/dc0d/asterisk"
+	"github.com/dc0d/asterisk/config"
+	. "github.com/dc0d/asterisk/def/flow"
+	. "github.com/dc0d/asterisk/def/house"
+	. "github.com/dc0d/asterisk/def/julian"
+	. "github.com/dc0d/asterisk/def/planet"
+	. "github.com/dc0d/asterisk/def/point"
+	. "github.com/dc0d/asterisk/def/position"
+	. "github.com/dc0d/asterisk/def/sign"
 )
 
 type Arc struct{ Start, End float64 }

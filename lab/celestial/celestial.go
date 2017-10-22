@@ -1,15 +1,17 @@
 package celestial
 
 import (
-	"asterisk/astrobserve"
-	"asterisk/def/direction"
-	"asterisk/def/planet"
-	"asterisk/def/sign"
 	"fmt"
-	"gopkg.in/mgo.v2/bson"
 	"strings"
-	pers "studio/persian/time"
 	"time"
+
+	pers "github.com/dc0d/persical"
+
+	"github.com/dc0d/asterisk/astrobserve"
+	"github.com/dc0d/asterisk/def/direction"
+	"github.com/dc0d/asterisk/def/planet"
+	"github.com/dc0d/asterisk/def/sign"
+	"gopkg.in/mgo.v2/bson"
 )
 
 type Moment struct {

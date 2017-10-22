@@ -1,20 +1,21 @@
 package lab
 
 import (
-	"asterisk/astrobserve"
-	"asterisk/def"
-	"asterisk/def/planet"
-	"asterisk/def/position"
-	"asterisk/lab/celestial"
 	"fmt"
-	"gopkg.in/mgo.v2"
-	"gopkg.in/mgo.v2/bson"
 	"log"
 	"os"
 	"sort"
 	"strings"
-	pers "studio/persian/time"
 	"time"
+
+	"github.com/dc0d/asterisk/astrobserve"
+	"github.com/dc0d/asterisk/def"
+	"github.com/dc0d/asterisk/def/planet"
+	"github.com/dc0d/asterisk/def/position"
+	"github.com/dc0d/asterisk/lab/celestial"
+	pers "github.com/dc0d/persical"
+	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
 
 type PlanetPair struct {
