@@ -3,20 +3,23 @@ package observatory
 import (
 	"context"
 	"path/filepath"
+	"time"
 
 	"github.com/dc0d/asterisk"
 	"github.com/dc0d/gosweph"
-	"github.com/dc0d/supervisor"
+	"github.com/dc0d/retry"
 	"github.com/pkg/errors"
 )
 
 //-----------------------------------------------------------------------------
 
 // Start starts the engine
-func Start(ctx context.Context, options ...supervisor.Option) {
-	go supervisor.Supervise(
+func Start(ctx context.Context) {
+	go retry.Retry(
 		agent(ctx),
-		options...)
+		-1,
+		nil,
+		time.Second)
 }
 
 //-----------------------------------------------------------------------------

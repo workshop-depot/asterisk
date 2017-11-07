@@ -5,12 +5,11 @@ import (
 	"strings"
 	"time"
 
-	pers "github.com/dc0d/persical"
-
 	"github.com/dc0d/asterisk/astrobserve"
-	"github.com/dc0d/asterisk/def/direction"
-	"github.com/dc0d/asterisk/def/planet"
-	"github.com/dc0d/asterisk/def/sign"
+	pers "github.com/dc0d/persical"
+	"gitlab.com/dc0d/gist/2017/05/gistsweph/def/direction"
+	"gitlab.com/dc0d/gist/2017/05/gistsweph/def/planet"
+	"gitlab.com/dc0d/gist/2017/05/gistsweph/def/sign"
 	"gopkg.in/mgo.v2/bson"
 )
 

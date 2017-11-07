@@ -9,11 +9,11 @@ import (
 	"time"
 
 	"github.com/dc0d/asterisk/astrobserve"
-	"github.com/dc0d/asterisk/def"
-	"github.com/dc0d/asterisk/def/planet"
-	"github.com/dc0d/asterisk/def/position"
 	"github.com/dc0d/asterisk/lab/celestial"
 	pers "github.com/dc0d/persical"
+	"gitlab.com/dc0d/gist/2017/05/gistsweph/def"
+	"gitlab.com/dc0d/gist/2017/05/gistsweph/def/planet"
+	"gitlab.com/dc0d/gist/2017/05/gistsweph/def/position"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -38,8 +38,8 @@ func Moments(pos position.Position, startDate, endDate time.Time, step float64, 
 				} else {
 					m := &celestial.Moment{Chart: *c}
 					m.Id = bson.NewObjectId()
-					pt := pers.GregorianToPersian(int32(c.Time.Year()), int32(c.Time.Month()), int32(c.Time.Day()))
-					pm := pers.PersianMonth(pt.Month)
+					pyear, pmonth, pday := pers.GregorianToPersian(c.Time.Year(), int(c.Time.Month()), c.Time.Day())
+					pm := pers.PersianMonth(pmonth)
 					m.PersianMonth = pm
 
 					if previous != nil {
