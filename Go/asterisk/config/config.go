@@ -2,7 +2,7 @@
 package config
 
 import (
-	"gosweph"
+	"github.com/dc0d/gosweph"
 )
 
 var (

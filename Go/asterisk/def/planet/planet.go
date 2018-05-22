@@ -2,25 +2,25 @@
 package planet
 
 import (
-	"asterisk/config"
-	"gosweph"
+	"github.com/dc0d/asterisk/Go/asterisk/config"
+	"github.com/dc0d/gosweph"
 )
 
 type Planet int32
 
-var (
-	Su Planet = Planet(1)
-	Mo Planet = Planet(2)
-	Me Planet = Planet(3)
-	Ve Planet = Planet(4)
-	Ma Planet = Planet(5)
-	Ju Planet = Planet(6)
-	Sa Planet = Planet(7)
-	Ur Planet = Planet(8)
-	Ne Planet = Planet(9)
-	Pl Planet = Planet(10)
-	Ra Planet = Planet(11)
-	Ke Planet = Planet(12)
+const (
+	Su Planet = iota + 1
+	Mo
+	Me
+	Ve
+	Ma
+	Ju
+	Sa
+	Ur
+	Ne
+	Pl
+	Ra
+	Ke
 )
 
 func (s Planet) String() string {
